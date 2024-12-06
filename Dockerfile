@@ -2,10 +2,12 @@ FROM python:3.12
 
 RUN pip install poetry
 
+COPY . /app/app.py
+
+WORKDIR /app/app.py
+
 RUN poetry install
 
-COPY ./app.py /app/app.py
+EXPOSE 8501
 
-WORKDIR /app
-
-ENTRYPOINT [ "poetry","run","streamlit","run","app.py" ]
+ENTRYPOINT ["poetry","run", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
